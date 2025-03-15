@@ -15,6 +15,8 @@ import {
 import { useState } from 'react';
 import clsx from 'clsx';
 import { Select } from 'src/ui/select';
+import { RadioGroup } from 'src/ui/radio-group';
+import { Separator } from 'src/ui/separator';
 
 type ArticleParamsFormProps = {
 	currentArticle: ArticleStateType;
@@ -45,11 +47,28 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 						setCurrentArticle(selectArticle); // обновляем данные у родителя
 					}}>
 					<Select
+						options={fontFamilyOptions} // форимрует выпадающий список
+						selected={selectArticle.fontFamilyOption} // текущий селект (который отображает в свернутом виде)
+						onChange={(option) => handleChange('fontFamilyOption', option)} // option: тут то, что придет из компонента Select, тот эл-т над еоторым совершили клик и выбрали его
+						title='Шрифт'
+					/>
+
+					<RadioGroup
+						options={fontSizeOptions} // форимрует выпадающий список
+						selected={selectArticle.fontSizeOption} // текущий селект (который отображает в свернутом виде)
+						onChange={(option) => handleChange('fontSizeOption', option)} // option: тут то, что придет из компонента Select, тот эл-т над еоторым совершили клик и выбрали его
+						title='Размер шрифта'
+						name='Open sans'
+					/>
+
+					<Select
 						options={fontColors} // форимрует выпадающий список
 						selected={selectArticle.fontColor} // текущий селект (который отображает в свернутом виде)
 						onChange={(option) => handleChange('fontColor', option)} // option: тут то, что придет из компонента Select, тот эл-т над еоторым совершили клик и выбрали его
-						title='Цвет'
+						title='Цвет шрифта'
 					/>
+
+					<Separator />
 
 					<Select
 						options={backgroundColors} // форимрует выпадающий список
@@ -63,20 +82,6 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 						selected={selectArticle.contentWidth} // текущий селект (который отображает в свернутом виде)
 						onChange={(option) => handleChange('contentWidth', option)} // option: тут то, что придет из компонента Select, тот эл-т над еоторым совершили клик и выбрали его
 						title='Ширина контента'
-					/>
-
-					<Select
-						options={fontFamilyOptions} // форимрует выпадающий список
-						selected={selectArticle.fontFamilyOption} // текущий селект (который отображает в свернутом виде)
-						onChange={(option) => handleChange('fontFamilyOption', option)} // option: тут то, что придет из компонента Select, тот эл-т над еоторым совершили клик и выбрали его
-						title='Шрифт текста'
-					/>
-
-					<Select
-						options={fontSizeOptions} // форимрует выпадающий список
-						selected={selectArticle.fontSizeOption} // текущий селект (который отображает в свернутом виде)
-						onChange={(option) => handleChange('fontSizeOption', option)} // option: тут то, что придет из компонента Select, тот эл-т над еоторым совершили клик и выбрали его
-						title='Размер текста'
 					/>
 
 					<div className={styles.bottomContainer}>
