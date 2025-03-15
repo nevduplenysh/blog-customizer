@@ -12,28 +12,45 @@ import {
 	OptionType,
 } from 'src/constants/articleProps';
 // import { useReducer, useRef, useState } from 'react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+// import { useState } from 'react';
 import clsx from 'clsx';
 import { Select } from 'src/ui/select';
 import { RadioGroup } from 'src/ui/radio-group';
 import { Separator } from 'src/ui/separator';
+import { Text } from 'src/ui/text';
+import { useOutsideClickClose } from 'src/ui/select/hooks/useOutsideClickClose';
 
 type ArticleParamsFormProps = {
 	currentArticle: ArticleStateType;
 	setCurrentArticle: (param: ArticleStateType) => void;
+	//
+	defaultArticle: ArticleStateType; // Начальные значения
 };
 
 // мэйби надо будет пропсы подругому передать
 export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
-	const { currentArticle, setCurrentArticle } = props;
+	const { currentArticle, setCurrentArticle, defaultArticle } = props;
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	// const rootRef = useRef<HTMLDivElement>(null);
+	const rootRef = useRef<HTMLDivElement>(null);
 	const [selectArticle, setSelectArticle] =
 		useState<ArticleStateType>(currentArticle);
 
 	const handleChange = (key: keyof ArticleStateType, value: OptionType) => {
 		setSelectArticle({ ...selectArticle, [key]: value });
 	};
+
+	const handleReset = () => {
+		setSelectArticle(defaultArticle); // Сбрасываем форму к начальным значениям
+		setCurrentArticle(defaultArticle); // Обновляем статью
+	};
+
+	useOutsideClickClose({
+		isOpen,
+		rootRef,
+		onClose: () => setIsOpen(false),
+		onChange: setIsOpen,
+	});
 
 	return (
 		<>
@@ -45,7 +62,17 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 					onSubmit={(e) => {
 						e.preventDefault();
 						setCurrentArticle(selectArticle); // обновляем данные у родителя
-					}}>
+					}}
+
+					// onReset={(e) => {
+					// 	e.preventDefault();
+					// 	setSelectArticle(currentArticle); // Сбрасываем состояние формы
+					// }}
+				>
+					<Text size={31} weight={800} uppercase={true}>
+						Задайте параметры
+					</Text>
+
 					<Select
 						options={fontFamilyOptions} // форимрует выпадающий список
 						selected={selectArticle.fontFamilyOption} // текущий селект (который отображает в свернутом виде)
@@ -85,7 +112,12 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 					/>
 
 					<div className={styles.bottomContainer}>
-						<Button title='Сбросить' htmlType='reset' type='clear' />
+						<Button
+							title='Сбросить'
+							htmlType='reset'
+							type='clear'
+							onClick={handleReset}
+						/>
 						<Button title='Применить' htmlType='submit' type='apply' />
 					</div>
 				</form>

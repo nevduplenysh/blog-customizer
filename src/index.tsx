@@ -35,6 +35,8 @@ const App = () => {
 			<ArticleParamsForm
 				currentArticle={currentArticle}
 				setCurrentArticle={setCurrentArticle}
+				//
+				defaultArticle={defaultArticleState}
 			/>
 
 			<Article />

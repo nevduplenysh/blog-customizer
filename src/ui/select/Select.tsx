@@ -13,7 +13,7 @@ import styles from './Select.module.scss';
 
 type SelectProps = {
 	selected: OptionType | null; // выбранный вариант
-	options: OptionType[]; // массив вариантов выбора
+	options: OptionType[]; // массив вариантов выбора иантов выбора
 	placeholder?: string; // текст, который отображается, если ни один вариант не выбран.
 	onChange?: (selected: OptionType) => void; // функция, которая вызывается при изменении выбранного варианта.
 	onClose?: () => void; // функция, которая вызывается при закрытии выпадающего списка.
