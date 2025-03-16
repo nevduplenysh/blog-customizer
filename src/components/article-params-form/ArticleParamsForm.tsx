@@ -11,9 +11,7 @@ import {
 	fontSizeOptions,
 	OptionType,
 } from 'src/constants/articleProps';
-// import { useReducer, useRef, useState } from 'react';
 import { useRef, useState } from 'react';
-// import { useState } from 'react';
 import clsx from 'clsx';
 import { Select } from 'src/ui/select';
 import { RadioGroup } from 'src/ui/radio-group';
@@ -48,7 +46,7 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	useOutsideClickClose({
 		isOpen,
 		rootRef,
-		onClose: () => setIsOpen(false),
+		onClose: () => setIsOpen(false), // Закрываем форму
 		onChange: setIsOpen,
 	});
 
@@ -56,19 +54,14 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 		<>
 			<ArrowButton isOpen={isOpen} onClick={setIsOpen} />
 			<aside
-				className={clsx(styles.container, { [styles.container_open]: isOpen })}>
+				className={clsx(styles.container, { [styles.container_open]: isOpen })}
+				ref={rootRef}>
 				<form
 					className={styles.form}
 					onSubmit={(e) => {
 						e.preventDefault();
 						setCurrentArticle(selectArticle); // обновляем данные у родителя
-					}}
-
-					// onReset={(e) => {
-					// 	e.preventDefault();
-					// 	setSelectArticle(currentArticle); // Сбрасываем состояние формы
-					// }}
-				>
+					}}>
 					<Text size={31} weight={800} uppercase={true}>
 						Задайте параметры
 					</Text>
